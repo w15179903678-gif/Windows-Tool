@@ -1,0 +1,113 @@
+﻿<Window x:Class="WindowTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="窗口自动化助手 PRO" Height="750" Width="580" Background="#121212" WindowStartupLocation="CenterScreen" FontFamily="Segoe UI, Microsoft YaHei">
+    <Window.Resources>
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#007ACC"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style x:Key="SecondaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#333333"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid Margin="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,15">
+            <TextBlock Text="窗口自动化执行引擎" Foreground="#007ACC" FontSize="24" FontWeight="Bold"/>
+            <TextBlock Text="支持智能录制、平滑拖拽及后台批量回放" Foreground="#888888" FontSize="12"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Background="#1E1E1E" Padding="15" CornerRadius="8" Margin="0,0,0,20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <DockPanel Margin="0,0,0,12">
+                        <TextBlock Text="窗口标题: " Foreground="#BBBBBB" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox Name="TitleTxt" Text="雷电模拟器" Background="#121212" Foreground="White" BorderBrush="#3F3F46" Padding="5"/>
+                    </DockPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="当前配置: " Foreground="#888888" VerticalAlignment="Center"/>
+                        <TextBlock Name="ConfigDisplayName" Text="未载入" Foreground="#00FF88" FontWeight="SemiBold" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                        <Button Content="连接窗口" Click="OnConnectClick" Style="{StaticResource SecondaryButton}" Margin="20,0,0,0" Width="100"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button Grid.Column="1" Name="RecordBtn" Content="● 开始录制" Click="OnRecordToggleClick" Width="120" Height="80" Margin="20,0,0,0" Background="#B40000" Foreground="White" FontWeight="Bold" FontSize="16" BorderThickness="0"/>
+            </Grid>
+        </Border>
+
+        <GroupBox Grid.Row="2" Header="操作动作序列" Foreground="#007ACC" BorderBrush="#333">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ListBox Name="StepList" Background="#101010" Foreground="#D4D4D4" BorderThickness="0" HorizontalContentAlignment="Stretch">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#252526" BorderThickness="0,0,0,1" Padding="8">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Timestamp, StringFormat=HH:mm:ss}" Foreground="#555555"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Description}" FontWeight="Bold"/>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                        <TextBlock Text="点: " Foreground="#444"/>
+                                        <TextBlock Text="{Binding X}"/><TextBlock Text=","/><TextBlock Text="{Binding Y}"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="3" Text="{Binding DelayMs, StringFormat=⌛ {0}ms}" Foreground="#D19A66"/>
+                                    <TextBlock Grid.Column="4" Text="{Binding DurationMs, StringFormat=⏱️ {0}ms}" Foreground="#56B6C2"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+                    <Button Content="保存配置" Click="OnSaveConfigClick" Style="{StaticResource SecondaryButton}" Margin="5,0"/>
+                    <Button Content="读取配置" Click="OnLoadConfigClick" Style="{StaticResource SecondaryButton}" Margin="5,0"/>
+                    <Button Content="重置队列" Click="OnClearStepsClick" Style="{StaticResource SecondaryButton}" Margin="5,0"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <Border Grid.Row="3" Margin="0,20,0,0" Background="#1E1E1E" Padding="15" CornerRadius="8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Name="LoopChk" Content="循环模式" Foreground="White" VerticalAlignment="Center" Margin="0,0,15,0"/>
+                    <TextBlock Text="轮次间隔(ms): " Foreground="#888888" VerticalAlignment="Center"/>
+                    <TextBox Name="LoopDelayTxt" Text="1000" Width="60" Background="#121212" Foreground="White" BorderBrush="#3F3F46" VerticalContentAlignment="Center" TextAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Name="RunBtn" Content="🚀 开始执行任务" Click="OnExecuteTaskClick" Style="{StaticResource PrimaryButton}" Width="160"/>
+                    <Button Name="StopTaskBtn" Content="🛑 强行停止" Click="OnStopExecutionClick" Style="{StaticResource PrimaryButton}" Background="#D32F2F" Width="100" Margin="10,0,0,0" Visibility="Collapsed"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

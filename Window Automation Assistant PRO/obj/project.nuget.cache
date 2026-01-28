@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "QFKWr97xeKI=",
+  "success": true,
+  "projectFilePath": "D:\\Project\\VPet\\桌面窗口抓取工具\\WindowTool\\WindowTool.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
