@@ -1,5 +1,5 @@
 # Windows-Tool
-一、窗口自动化助手 PRO (Window Automation Assistant PRO)”，是一个基于 WPF (C#) 开发的 Windows 桌面连接与自动化工具。\r\n
+一、窗口自动化助手 PRO (Window Automation Assistant PRO)”，是一个基于 WPF (C#) 开发的 Windows 桌面连接与自动化工具。/r/n
 它的核心功能是录制并回放针对特定窗口（如雷电模拟器或其他游戏窗口）的鼠标操作，且支持在后台执行，不占用真实的鼠标指针。\r\n
 
 1. 项目核心定位\r\n
